@@ -5,14 +5,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Month of {{ month_name }}</title>
+    <script src="{{ url_for('static', filename='calendar_script.js') }}" defer></script>
 </head>
 <body>
     <h1>Month of {{ month_name }}</h1>
-    <div style="display: flex; flex-direction: column; gap: 20px;">
+    <div class="week_wrap" style="display: flex; flex-direction: column; gap: 20px;">
         {% set weekdays = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'] %}
         {% for j in range(0, month_data| length) %}
             {% set week = month_data[j] %}
-            <div data-weekid="{{month_id}}-{{j}}" style="display: flex; flex-direction: row; gap: 20px; justify-content: space-evenly; background-color: grey;">
+            <div class="week" data-weekid="{{month_id}}-{{j}}" style="display: flex; flex-direction: row; gap: 20px; justify-content: space-evenly; background-color: grey;">
                 {% for i in range(0, week| length) %}
                     <div style="display: flex; flex-direction: column; background-color: bisque; flex-grow: 1; align-items: center;">
                         <p>{{ weekdays[i] }}</p>
