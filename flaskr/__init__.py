@@ -13,7 +13,7 @@ def create_app(test_config=None):
 
     @app.route("/month")
     def month():
-        return redirect("/month/"+datetime.date.today().isoformat())
+        return redirect(f"/month/{datetime.date.today().isoformat()}")
 
     @app.route("/month/<date>")
     def month_date(date):
