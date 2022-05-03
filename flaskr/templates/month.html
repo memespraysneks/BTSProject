@@ -9,7 +9,7 @@
 <body>
     <h1>Month of {{ month_name }}</h1>
     <div style="display: flex; flex-direction: column; gap: 20px;">
-        {% set weekdays = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'] %}
+        {% set weekdays = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'] %}
         {% for week in month_data %}
             <div style="display: flex; flex-direction: row; gap: 20px; justify-content: space-evenly; background-color: grey;">
                 {% for i in range(0, week| length) %}

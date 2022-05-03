@@ -18,6 +18,7 @@ def create_app(test_config=None):
     @app.route("/month/<date>")
     def month_date(date):
         calendar_date = datetime.date.fromisoformat(date)
+        calendar.setfirstweekday(6)
         month_calendar = calendar.monthcalendar(calendar_date.year, calendar_date.month)
         return render_template("month.html", month_data=month_calendar, month_name=calendar_date.strftime("%B"))
 
