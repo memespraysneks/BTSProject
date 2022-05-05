@@ -1,6 +1,8 @@
 from flask import Flask, redirect, render_template, url_for
 from calendarpage import calendarpage
 from adddelete import adddelete
+from database import databaseAPI
+from login import loginpage
 
 def create_app(test_config=None):
     app = Flask(__name__, instance_relative_config=True)
@@ -10,12 +12,15 @@ def create_app(test_config=None):
     
     app.register_blueprint(calendarpage)
     app.register_blueprint(adddelete)
+    app.register_blueprint(databaseAPI)
+    app.register_blueprint(loginpage)
 
     @app.route("/")
     def index():
         return render_template("index.html")
 
     return app
+
 
 if __name__ == "__main__":
     create_app()
