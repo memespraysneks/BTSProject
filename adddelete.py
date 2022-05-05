@@ -27,9 +27,9 @@ def add(date):
         title = form.title.data
         description = form.description.data
         db = get_db()
-        db.execute(
-            f'INSERT INTO EVENTS(EVENTNAME, EVENTDESCRIPTION) VALUES({title},{description})'
-        )
+        #db.execute(
+        #    f'INSERT INTO EVENTS(EVENTNAME, EVENTDESCRIPTION) VALUES({title},{description})'
+        #)
         form.title.data = ''
         form.description.data = ''
 
