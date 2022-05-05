@@ -1,4 +1,4 @@
-from flask import Flask, redirect, render_template, Blueprint, request
+from flask import Flask, redirect, render_template, Blueprint, request, session
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField
 from wtforms.validators import DataRequired
@@ -26,9 +26,12 @@ def add(date):
     if form.validate_on_submit():
         title = form.title.data
         description = form.description.data
-        get_db().execute(
-           f'INSERT INTO EVENTS(EVENTNAME, EVENTDESCRIPTION) VALUES(?,?)', (title,description)
+        db = get_db()
+        db.execute(
+           f'INSERT INTO EVENTS(EVENTNAME, EVENTDESCRIPTION, EVENTDATE, USERID) VALUES(?,?,?,?)', (title,description, date, session['user_id'])
         )
+        db.commit()
+
         form.title.data = ''
         form.description.data = ''
 

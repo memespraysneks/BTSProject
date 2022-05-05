@@ -27,8 +27,8 @@ def runTheData ():
             error = 'Incorrect password.'
 
         if error is None:
-            #session.clear()
-            #session['user_id'] = user['id']
-            return redirect(url_for('index'))
+            session.clear()
+            session['user_id'] = user['USERID']
+            return redirect("/month")
 
     return render_template('login.html')

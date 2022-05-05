@@ -1,17 +1,19 @@
-CREATE TABLE USERS
+CREATE TABLE IF NOT EXISTS USERS
 (
-    USERID int identity(1,1) primary key,
+    USERID integer primary key autoincrement,
     USERNAME varchar(50),
     USERPASSWORD varchar(50)
 );
 
 
-CREATE TABLE EVENTS
+CREATE TABLE IF NOT EXISTS EVENTS
 (
-    EVENTID int identity(1,1) primary key,
-    EVENTNAME varchar(max),
-    EVENTDESCRIPTION varchar(max),
-    EVENTDATE datetime
+    EVENTID integer primary key autoincrement,
+    EVENTNAME varchar(255),
+    EVENTDESCRIPTION varchar(255),
+    EVENTDATE datetime,
+    USERID integer,
+    FOREIGN KEY(USERID) REFERENCES USERS(USERID)
 );
 
 INSERT INTO USERS(USERNAME, USERPASSWORD)
