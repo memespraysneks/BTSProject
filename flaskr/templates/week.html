@@ -31,12 +31,11 @@
             let date = day.dataset.date
 
             targetdate = date
-            console.log(date)
             ShowAddButton()
         })
 
         document.querySelector("#add_button").addEventListener("click", (event) => {
-            window.location = `/add/${targetdate}`
+            window.location = `/add/${targetdate}?from=${window.location.pathname}`
         })
 
         function ShowAddButton() {

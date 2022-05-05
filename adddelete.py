@@ -1,4 +1,4 @@
-from flask import Flask, render_template, Blueprint
+from flask import Flask, redirect, render_template, Blueprint, request
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField
 from wtforms.validators import DataRequired
@@ -17,8 +17,8 @@ class EventForm(FlaskForm):
 #    return render_template("home.html")
 
 
-@adddelete.route('/add', methods=['GET', 'POST'])
-def add():
+@adddelete.route('/add/<string:date>', methods=['GET', 'POST'])
+def add(date):
     title = None
     description = None
     form = EventForm()
@@ -28,6 +28,10 @@ def add():
         description = form.description.data
         form.title.data = ''
         form.description.data = ''
+
+        redirect_loc = request.args.get("from")
+        if redirect_loc is not None:
+            return redirect(redirect_loc)
 
     return render_template("add.html",
         title = title,
