@@ -45,5 +45,6 @@ def week_date(year, month, week):
     events = []
     user_id = session["user_id"]
     for row in get_db().execute(f"SELECT * FROM EVENTS WHERE USERID={user_id}"):
-        events.append((row["EVENTNAME"], row["EVENTDESCRIPTION"], row["EVENTDATE"]))
+        split_date = row["EVENTDATE"].split("-")
+        events.append((row["EVENTNAME"], row["EVENTDESCRIPTION"], split_date[0], split_date[1], split_date[2], row["EVENTID"]))
     return render_template("week.html", events=events, year=year, month=month, week=week_dates, month_name=month_name, week_num=week)
