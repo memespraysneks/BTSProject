@@ -75,7 +75,15 @@
         function deleteEvent(event) {
             let ev = event.target.closest(".event")
             let eventid = ev.dataset.eventid
-            console.log("Deleteing " + eventid)
+
+            const xhr = new XMLHttpRequest()
+            xhr.open("GET", `${window.location.origin}/deleteEvent/${eventid}`)
+            xhr.onload = () => {
+                if (xhr.status === 200) {
+                    ev.remove() //Remove the element from html
+                }
+            }
+            xhr.send()
         }
 
         function ShowAddButton() {
