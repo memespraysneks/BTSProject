@@ -34,4 +34,4 @@ def week_date(year, month, week):
     week %= len(month_calendar) # Hacky workaround to prevent invalid week
 
     week_dates = month_calendar[week]
-    return render_template("week.html", week=week_dates, month_name=month_name, week_num=week)
+    return render_template("week.html", year=year, month=month, week=week_dates, month_name=month_name, week_num=week)
