@@ -1,9 +1,16 @@
 from flask import Flask, redirect, render_template, url_for
 from calendarpage import calendarpage
+from adddelete import adddelete
 
 def create_app(test_config=None):
     app = Flask(__name__, instance_relative_config=True)
+    
+    # secret key for the form
+    app.config['SECRET_KEY'] = "secret key"
+    
     app.register_blueprint(calendarpage)
+    app.register_blueprint(adddelete)
+
     @app.route("/")
     def index():
         return render_template("index.html")
