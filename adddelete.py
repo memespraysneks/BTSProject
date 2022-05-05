@@ -26,10 +26,9 @@ def add(date):
     if form.validate_on_submit():
         title = form.title.data
         description = form.description.data
-        db = get_db()
-        #db.execute(
-        #    f'INSERT INTO EVENTS(EVENTNAME, EVENTDESCRIPTION) VALUES({title},{description})'
-        #)
+        get_db().execute(
+           f'INSERT INTO EVENTS(EVENTNAME, EVENTDESCRIPTION) VALUES(?,?)', (title,description)
+        )
         form.title.data = ''
         form.description.data = ''
 

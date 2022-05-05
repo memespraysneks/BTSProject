@@ -1,6 +1,8 @@
+from asyncio import events
 import datetime
 import calendar
 from flask import Flask, redirect, render_template, url_for, Blueprint
+from dbconnection import get_db
 
 calendarpage = Blueprint("calendarpage", __name__)
 
@@ -34,4 +36,8 @@ def week_date(year, month, week):
     week %= len(month_calendar) # Hacky workaround to prevent invalid week
 
     week_dates = month_calendar[week]
-    return render_template("week.html", year=year, month=month, week=week_dates, month_name=month_name, week_num=week)
+    events = []
+    for row in get_db().execute("SELECT * FROM EVENTS"):
+        events.push((row["EVENTNAME"], row["EVENTDESCRIPTION"]))
+        print(row["EVENTNAME"])
+    return render_template("week.html", events=events, year=year, month=month, week=week_dates, month_name=month_name, week_num=week)

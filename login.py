@@ -16,9 +16,8 @@ def runTheData ():
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
-        db = get_db()
         error = None
-        user = db.execute(
+        user = get_db().execute(
             'SELECT * FROM USERS WHERE USERNAME = ?', (username,)
         ).fetchone()
 
