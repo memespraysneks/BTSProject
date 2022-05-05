@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Week {{ week_num+1 }} of {{ month_name }}</h1>
+    {% set weekdays = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'] %}
+    <div class="week" style="display: flex; flex-direction: row; gap: 20px; justify-content: space-evenly; background-color: grey;">
+        {% for i in range(0, week| length) %}
+            <div data-date="{{ year }}-{{ month }}-{{ week[i] }}" class="day" style="display: flex; flex-direction: column; background-color: bisque; flex-grow: 1; align-items: center;">
+                <p>{{ weekdays[i] }}</p>
+                {% if week[i] > 0 %}
+                <p><strong>{{ week[i] }}</strong></p>
+                {% endif %}
+            </div>
+        {% endfor %}
+    </div>
+
+    <button id="add_button" style="display: none;">Add New Event</button>
+
+    <script>
+        let targetdate
+
+        document.querySelector(".week").addEventListener("click", (event) => {
+            let day = event.target.closest(".day")
+            if (!day) return
+            let date = day.dataset.date
+
+            targetdate = date
+            ShowAddButton()
+        })
+
+        document.querySelector("#add_button").addEventListener("click", (event) => {
+            window.location = `/add/${targetdate}?from=${window.location.pathname}`
+        })
+
+        function ShowAddButton() {
+            let btn = document.querySelector("#add_button")
+            btn.removeAttribute("style")
+        }
+    </script>
+</body>
+</html>
