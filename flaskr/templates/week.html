@@ -17,13 +17,17 @@
 </head>
 <body>
     <h1>Week {{ week_num+1 }} of {{ month_name }}</h1>
-    {% set weekdays = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'] %}
+    {% set weekdays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'] %}
     <div class="week" style="display: flex; flex-direction: row; gap: 20px; justify-content: space-evenly; background-color: grey;">
         {% for i in range(0, week| length) %}
             <div data-date="{{ year }}-{{ month }}-{{ week[i] }}" data-day="{{week[i]}}" class="day" style="display: flex; flex-direction: column; background-color: bisque; flex-grow: 1; align-items: center;">
                 <p>{{ weekdays[i] }}</p>
                 {% if week[i] > 0 %}
-                <p><strong>{{ week[i] }}</strong></p>
+                    <p><strong>{{ week[i] }}</strong></p>
+                {% endif %}
+                {% set fdate = year|string + '-' + month|string + '-' + week[i]|string %}
+                {% if fdate in event_counts %}
+                    <p>{{ event_counts[fdate] }} Event{% if event_counts[fdate] > 1 %}s{% endif %}</p>
                 {% endif %}
             </div>
         {% endfor %}
@@ -32,7 +36,7 @@
     <button id="add_button" style="display: none;">Add New Event</button>
     {% for day in week %}
     <div class="day" id="day_{{ day }}">
-        <h2>Events for {{ day }}</h2>
+        <h2>Events for {{ month_name }} {{ day }}</h2>
         {% for event in events %}
             {% if event[2]|int == year and event[3]|int == month and event[4]|int == day %}
                 <div class="event" data-eventid="{{event[5]}}" style="display:flex; flex-direction: row;">

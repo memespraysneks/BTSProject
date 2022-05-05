@@ -42,9 +42,23 @@ def week_date(year, month, week):
     week %= len(month_calendar) # Hacky workaround to prevent invalid week
 
     week_dates = month_calendar[week]
-    events = []
     user_id = session["user_id"]
+    events = get_user_events(user_id)
+    event_counts = get_user_events_by_date(user_id=user_id)
+    
+    return render_template("week.html", event_counts=event_counts, events=events, year=year, month=month, week=week_dates, month_name=month_name, week_num=week)
+
+def get_user_events_by_date(user_id):
+    events = {}
+    for row in get_db().execute(f"SELECT EVENTDATE, COUNT(*) as COUNT FROM EVENTS WHERE USERID={user_id} GROUP BY EVENTDATE"):
+        events[row["EVENTDATE"]] = row["COUNT"]
+
+    return events
+
+def get_user_events(user_id):
+    events = []
     for row in get_db().execute(f"SELECT * FROM EVENTS WHERE USERID={user_id}"):
         split_date = row["EVENTDATE"].split("-")
         events.append((row["EVENTNAME"], row["EVENTDESCRIPTION"], split_date[0], split_date[1], split_date[2], row["EVENTID"]))
-    return render_template("week.html", events=events, year=year, month=month, week=week_dates, month_name=month_name, week_num=week)
+    
+    return events
