@@ -1,3 +1,4 @@
+from crypt import methods
 from flask import Flask, render_template, Blueprint
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField
@@ -33,6 +34,11 @@ def add():
         title = title,
         description = description,
         form = form)
+
+@adddelete.route('/update', methods=['GET', 'POST'])
+def update():
+    pass
+
 
 
 
