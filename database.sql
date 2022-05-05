@@ -1,6 +1,6 @@
 CREATE TABLE USERS
 (
-    USERID varchar(10) primary key,
+    USERID int identity(1,1) primary key,
     USERNAME varchar(50),
     USERPASSWORD varchar(50)
 );
@@ -8,12 +8,13 @@ CREATE TABLE USERS
 
 CREATE TABLE EVENTS
 (
-    EVENTID varchar(10) primary key,
-    EVENTNAME varchar(50),
+    EVENTID int identity(1,1) primary key,
+    EVENTNAME varchar(max),
+    EVENTDESCRIPTION varchar(max),
     EVENTDATE datetime
 );
 
-INSERT INTO USERS
-    VALUES("USER001", "Caleb Seeman", "Testing"),
-    ("USER002", "SJ Park", "Test"),
-    ("USER003", "Liam Brooke", "Tests")
+INSERT INTO USERS(USERNAME, USERPASSWORD)
+    VALUES("Caleb Seeman", "Testing"),
+    ("SJ Park", "Test"),
+    ("Liam Brooke", "Tests")

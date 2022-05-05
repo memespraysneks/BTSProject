@@ -2,7 +2,7 @@ from flask import Flask, redirect, render_template, Blueprint, request
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField
 from wtforms.validators import DataRequired
-
+from dbconnection import get_db
 
 adddelete = Blueprint('adddelete', __name__)
 
@@ -26,6 +26,10 @@ def add(date):
     if form.validate_on_submit():
         title = form.title.data
         description = form.description.data
+        db = get_db()
+        db.execute(
+            f'INSERT INTO EVENTS(EVENTNAME, EVENTDESCRIPTION) VALUES({title},{description})'
+        )
         form.title.data = ''
         form.description.data = ''
 
