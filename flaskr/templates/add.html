@@ -1,0 +1,43 @@
+{% extends 'index.html' %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+      <meta charset="UTF-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <link rel="stylesheet" href="{{ url_for('static', filename='styling.css') }}">
+      <title>Simply Calander</title>
+</head>
+<body>
+    {% if title %}
+    <h2>Your event: {{ title }} </h2>
+    <p>Event Detail: {{ description }}</p>
+    {% else %}
+    <h1>Please type your schedule</h1>
+    <br/>
+    <form method="POST">
+        {{ form.hidden_tag() }}
+        
+        {{ form.title.label }}
+        
+        {{ form.title(
+            class="form-control"
+        ) }}
+
+        {{ form.description.label }}
+
+        {{ form.description(
+            class="form-control"
+        )}}
+        <br/>
+
+        {{ form.submit(
+            class="btn btn-primary"
+        ) }}
+
+    </form>
+{% endif %}
+</body>
+</html>
+{% endblock %}
