@@ -50,6 +50,8 @@ def update():
 
 @adddelete.route("/deleteEvent/<int:eventid>", methods=["GET"])
 def deletestuff(eventid):
-    get_db().execute(f'DELETE FROM EVENTS WHERE EVENTID == {eventid}')
-    return render_template("month.html")
+    db = get_db()
+    db.execute(f'DELETE FROM EVENTS WHERE EVENTID == {eventid}')
+    db.commit()
+    return "ok"
 
