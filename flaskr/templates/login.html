@@ -1,57 +1,52 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <link rel="stylesheet" herf= "styles.CSS">
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> Simply Calandar </title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-		href="https://fonts.googleapis.com/css2?family=Zen+Kurenaido&family=Zen+Old+Mincho:wght@700&display=swap"
-		rel="stylesheet"
-	/>
-    <link rel="stylesheet" href="{{ url_for('static', filename='styling.css') }}" />
-</head>
-<body>
-    <header>
-        <h1> Simply Calender </h1>
-        <h2> Just Better... THEN ALL THE OTHER SHIT YOU USE</h2>
+<link rel="stylesheet" href="styles.CSS"/>
 
-    </header>
-    <!-- Button to open the modal login form -->
-    <button onclick="document.getElementById('id01').style.display='block'">Login</button>
-
-    <!-- The Modal -->
-    <div id="id01" class="modal">
-    <span onclick="document.getElementById('id01').style.display='none'"
-    class="close" title="Close Modal">&times;</span>
-
-    <!-- Modal Content -->
-    <form class="modal-content animate" action="/login" method="POST">
-        <div class="imgcontainer">
-        <img src="{{ url_for('static', filename='dogsniff.jpg') }}" alt="Avatar" class="avatar">
+<section class="vh-100">
+    <div class="container py-5 h-100">
+      <div class="row d-flex align-items-center justify-content-center h-100">
+         Simply Calandar 
+        <div class="col-md-8 col-lg-7 col-xl-6">
+          <img src="static/calandar.jpg"
+            class="img-fluid" alt="Phone image">
+            <label><label>
         </div>
+        <div class="col-md-7 col-lg-5 col-xl-5 offset-xl-1">
+          <form>
+            <!-- Email input -->
+            <div class="form-outline mb-4">
+              <input type="email" id="form1Example13" class="form-control form-control-lg" />
+              <label class="form-label" for="form1Example13">Email address</label>
+            </div>
+  
+            <!-- Password input -->
+            <div class="form-outline mb-4">
+              <input type="password" id="form1Example23" class="form-control form-control-lg" />
+              <label class="form-label" for="form1Example23">Password</label>
+            </div>
+  
+            <div class="d-flex justify-content-around align-items-center mb-4">
+              <!-- Checkbox -->
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="form1Example3" checked />
+                <label class="form-check-label" for="form1Example3"> Remember me </label>
+              </div>
+              <a href="#!">Forgot password?</a>
+            </div>
+  
+            <!-- Submit button -->
+            <button type="submit" class="btn btn-primary btn-lg btn-block">Sign in</button>
+  
+            <div class="divider d-flex align-items-center my-4">
+              <p class="text-center fw-bold mx-3 mb-0 text-muted">OR</p>
+            </div>
+            <!-- Register button -->>
+            <a class="btn btn-primary btn-lg btn-block" style="background-color: #3b5998" href="#!"
+              role="button">
+              <i class="fab fa-facebook-f me-2"></i>Register Here
+            </a>
 
-        <div class="container">
-        <label for="uname"><b>Username</b></label>
-        <input type="text" placeholder="Enter Username" name="username" required>
-
-        <label for="psw"><b>Password</b></label>
-        <input type="password" placeholder="Enter Password" name="password" required>
-
-        <button type="submit">Login</button>
-        <label>
-            <input type="checkbox" checked="checked" name="remember"> Remember me
-        </label>
+  
+          </form>
         </div>
-
-        <div class="container" style="background-color:#f1f1f1">
-        <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Cancel</button>
-        <span class="psw">Forgot <a href="#">password?</a></span>
-        </div>
-    </form>
+      </div>
     </div>
-</body>
-</html>
+  </section>
