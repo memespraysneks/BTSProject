@@ -48,7 +48,8 @@ def add(date):
 def update():
     pass
 
-
-
-
+@adddelete.route("/deleteEvent/<int:eventid>", methods=["GET"])
+def deletestuff(eventid):
+    get_db().execute(f'DELETE FROM EVENTS WHERE EVENTID == {eventid}')
+    return render_template("month.html")
 

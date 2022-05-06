@@ -62,3 +62,4 @@ def get_user_events(user_id):
         events.append((row["EVENTNAME"], row["EVENTDESCRIPTION"], split_date[0], split_date[1], split_date[2], row["EVENTID"]))
     
     return events
+
