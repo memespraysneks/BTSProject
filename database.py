@@ -1,5 +1,6 @@
 import _sqlite3 as sqlite3
 from flask import Blueprint
+from passlib.hash import sha256_crypt
 
 databaseAPI = Blueprint('databaseAPI', __name__)
 
@@ -12,6 +13,10 @@ def runTheData ():
     sql_file = open("database.sql")
     sql_as_string = sql_file.read()
     cursor.executescript(sql_as_string)
+    password = "Testing"
+    hashedpassword = sha256_crypt.hash(password)
+    print(hashedpassword)
+    cursor.execute(f'INSERT OR IGNORE INTO USERS(USERNAME, USERPASSWORD) VALUES("Caleb Seeman", "{hashedpassword}")')
     listofusers = []
     for row in cursor.execute("SELECT * FROM USERS"):
         listofusers+= row

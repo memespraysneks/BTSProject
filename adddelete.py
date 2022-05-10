@@ -28,7 +28,7 @@ def add(date):
         description = form.description.data
         db = get_db()
         db.execute(
-           f'INSERT INTO EVENTS(EVENTNAME, EVENTDESCRIPTION, EVENTDATE, USERID) VALUES(?,?,?,?)', (title,description, date, session['user_id'])
+           f'INSERT OR IGNORE INTO EVENTS(EVENTNAME, EVENTDESCRIPTION, EVENTDATE, USERID) VALUES(?,?,?,?)', (title,description, date, session['user_id'])
         )
         db.commit()
 
