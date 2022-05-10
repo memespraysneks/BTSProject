@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .day {
+            display: none;
+        }
+        .shown-day {
+            display: flex;
+            flex-direction: column;
+        }
+    </style>
+</head>
+<body>
+    <h1>Week {{ week_num+1 }} of {{ month_name }}</h1>
+    {% set weekdays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'] %}
+    <div class="week" style="display: flex; flex-direction: row; gap: 20px; justify-content: space-evenly; background-color: grey;">
+        {% for i in range(0, week| length) %}
+            <div data-date="{{ year }}-{{ month }}-{{ week[i] }}" data-day="{{week[i]}}" class="day" style="display: flex; flex-direction: column; background-color: bisque; flex-grow: 1; align-items: center;">
+                <p>{{ weekdays[i] }}</p>
+                {% if week[i] > 0 %}
+                    <p><strong>{{ week[i] }}</strong></p>
+                {% endif %}
+                {% set fdate = year|string + '-' + month|string + '-' + week[i]|string %}
+                {% if fdate in event_counts %}
+                    <p>{{ event_counts[fdate] }} Event{% if event_counts[fdate] > 1 %}s{% endif %}</p>
+                {% endif %}
+            </div>
+        {% endfor %}
+    </div>
+
+    <button id="add_button" style="display: none;">Add New Event</button>
+    {% for day in week %}
+    <div class="day" id="day_{{ day }}">
+        <h2>Events for {{ month_name }} {{ day }}</h2>
+        {% for event in events %}
+            {% if event[2]|int == year and event[3]|int == month and event[4]|int == day %}
+                <div class="event" data-eventid="{{event[5]}}" style="display:flex; flex-direction: row;">
+                    <div>
+                        <h3>{{ event[0] }}</h3>
+                        <p>{{ event[1] }}</p>
+                    </div>
+                    <div>
+                        <button onclick="deleteEvent(event)">Delete this event</button>
+
+                    </div>
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+    {% endfor %}
+    <script>
+        let targetdate
+
+        document.querySelector(".week").addEventListener("click", (event) => {
+            let day = event.target.closest(".day")
+            if (!day) return
+            let date = day.dataset.date
+            let day_num = day.dataset.day
+
+            targetdate = date
+            ShowAddButton()
+            document.querySelectorAll(`.day`).forEach((e) => e.classList.remove("shown-day"))
+            document.querySelector(`#day_${day_num}`).classList.add("shown-day")
+        })
+
+        document.querySelector("#add_button").addEventListener("click", (event) => {
+            window.location = `/add/${targetdate}?from=${window.location.pathname}`
+        })
+
+        function deleteEvent(event) {
+            let ev = event.target.closest(".event")
+            let eventid = ev.dataset.eventid
+
+            const xhr = new XMLHttpRequest()
+            xhr.open("GET", `${window.location.origin}/deleteEvent/${eventid}`)
+            xhr.onload = () => {
+                if (xhr.status === 200) {
+                    ev.remove() //Remove the element from html
+                }
+            }
+            xhr.send()
+        }
+
+        function ShowAddButton() {
+            let btn = document.querySelector("#add_button")
+            btn.removeAttribute("style")
+        }
+    </script>
+</body>
+</html>
