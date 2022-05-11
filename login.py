@@ -7,7 +7,7 @@ from flask import session
 from flask import url_for
 from dbconnection import get_db
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField
+from wtforms import StringField, SubmitField, PasswordField
 from wtforms.validators import DataRequired
 import sqlite3
 import json
@@ -16,7 +16,7 @@ loginpage = Blueprint('loginpage', __name__)
 
 class UserForm(FlaskForm):
     username = StringField("Username", validators=[DataRequired()], render_kw={"placeholder": "username"})
-    password = StringField("Password", validators=[DataRequired()], render_kw={"placeholder": "password"})
+    password = PasswordField("Password", validators=[DataRequired()], render_kw={"placeholder": "password"})
     login = SubmitField("Login")
 
 @loginpage.route("/login", methods=('GET', 'POST'))
