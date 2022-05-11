@@ -1,0 +1,47 @@
+{% extends 'index.html' %}
+{% block content %}
+<form method="POST">
+    {{ form.hidden_tag() }}
+    
+    {{ form.email.label }}
+    
+    {{ form.email(
+        class="form-control"
+    ) }}
+
+    {{ form.username.label }}
+
+    {{ form.username(
+        class="form-control"
+    )}}
+
+    {{ form.password.label }}
+
+    {{ form.password(
+        class="form-control"
+    )}}
+
+    {{ form.password2.label }}
+
+    {{ form.password2(
+        class="form-control"
+    )}}
+    <br/>
+
+    {% if form.errors %}
+        <div class="alert alert-danger">
+            <ul>
+            {% for error in form.errors %}
+                <li>{{ form.errors[error][0] }}</li>
+            {% endfor %}
+            </ul>
+        </div>
+        
+    {% endif %}
+
+    {{ form.submit(
+        class="btn btn-primary"
+    ) }}
+
+</form>
+{% endblock %}
