@@ -30,7 +30,6 @@ def edit(eventid):
 
     else:
         eventdetails = db.execute(f"SELECT EVENTNAME, EVENTDESCRIPTION FROM EVENTS WHERE USERID={session['user_id']} AND EVENTID={eventid}").fetchone()
-        print(eventdetails["EVENTNAME"])
         form.title.data = eventdetails["EVENTNAME"]
         form.description.data = eventdetails["EVENTDESCRIPTION"]
 
