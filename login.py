@@ -8,6 +8,7 @@ from flask import url_for
 from dbconnection import get_db
 import sqlite3
 import json
+from passlib.hash import sha256_crypt
 
 loginpage = Blueprint('loginpage', __name__)
 
@@ -20,15 +21,15 @@ def runTheData ():
         user = get_db().execute(
             'SELECT * FROM USERS WHERE USERNAME = ?', (username,)
         ).fetchone()
-
+        
         if user is None:
             error = 'Incorrect username.'
-        elif not user['USERPASSWORD'] == password:
+        elif not sha256_crypt.verify(password, user['USERPASSWORD']):
             error = 'Incorrect password.'
 
         if error is None:
             session.clear()
             session['user_id'] = user['USERID']
             return redirect("/month")
-
+        print(error)
     return render_template('login.html')

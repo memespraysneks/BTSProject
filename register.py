@@ -12,6 +12,7 @@ from wtforms import StringField, SubmitField, EmailField, PasswordField
 from wtforms.validators import DataRequired, EqualTo
 import sqlite3
 import json
+from passlib.hash import sha256_crypt
 
 class RegisterForm(FlaskForm):
     email = EmailField("Email", validators=[DataRequired()])
@@ -31,13 +32,16 @@ def runTheData ():
         email = form.email.data
         username = form.username.data
         password = form.password.data
-        
-        print(email, username, password)
+        hashedpassword = sha256_crypt.hash(password)
+        print(email, username, hashedpassword)
         db = get_db()
-        cursor = db.execute(
-            f'INSERT INTO USERS(USERNAME, USERPASSWORD) VALUES(?,?)', (username, password)
-        )
-        db.commit()
+        if not db.execute(f'SELECT * FROM USERS WHERE "{username}" == USERNAME'):
+            cursor = db.execute(
+            f'INSERT INTO USERS(USERNAME, USERPASSWORD, USEREMAIL) VALUES(?,?,?)', (username, hashedpassword, email)
+            )
+            db.commit()
+        else: #Fix this later
+            return redirect("/register")
 
         new_user_id = cursor.lastrowid
         session.clear()
