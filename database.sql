@@ -1,8 +1,9 @@
 CREATE TABLE IF NOT EXISTS USERS
 (
     USERID integer primary key autoincrement,
-    USERNAME varchar(50),
-    USERPASSWORD varchar(50)
+    USERNAME varchar(50) UNIQUE,
+    USERPASSWORD varchar(1000),
+    USEREMAIL varchar(100)
 );
 
 
@@ -16,7 +17,3 @@ CREATE TABLE IF NOT EXISTS EVENTS
     FOREIGN KEY(USERID) REFERENCES USERS(USERID)
 );
 
-INSERT INTO USERS(USERNAME, USERPASSWORD)
-    VALUES("Caleb Seeman", "Testing"),
-    ("SJ Park", "Test"),
-    ("Liam Brooke", "Tests")
