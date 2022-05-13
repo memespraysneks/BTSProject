@@ -40,6 +40,21 @@
                     {% if fdate in event_counts %}
                         <p>{{ event_counts[fdate] }} Event{% if event_counts[fdate] > 1 %}s{% endif %}</p>
                     {% endif %}
+    <button id="add_button" style="display: none;">Add New Event</button>
+    {% for day in week %}
+    <div class="day" id="day_{{ day }}">
+        <h2>Events for {{ month_name }} {{ day }}</h2>
+        {% for event in events %}
+            {% if event[2]|int == year and event[3]|int == month and event[4]|int == day %}
+                <div class="event" data-eventid="{{event[5]}}" style="display:flex; flex-direction: row;">
+                    <div>
+                        <h3>{{ event[0] }}</h3>
+                        <p>{{ event[1] }}</p>
+                    </div>
+                    <div>
+                        <button onclick="deleteEvent(event)">Delete this event</button>
+                        <button onclick="editevent(event)">Edit this event</button>
+                    </div>
                 </div>
             {% endfor %}
         </div>
@@ -109,6 +124,14 @@
                 }
             }
             xhr.send()
+        }
+
+        function editevent(event) {
+            let ev = event.target.closest(".event")
+            if (!ev) return
+
+            let eventid = ev.dataset.eventid
+            window.location = `/edit/${eventid}?from=${window.location.pathname}`
         }
 
         function ShowAddButton() {

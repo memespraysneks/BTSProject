@@ -11,6 +11,7 @@ from wtforms import StringField, SubmitField, PasswordField
 from wtforms.validators import DataRequired
 import sqlite3
 import json
+from passlib.hash import sha256_crypt
 
 loginpage = Blueprint('loginpage', __name__)
 
@@ -41,7 +42,7 @@ def login():
 
             if user is None:
                 error = 'Incorrect username.'
-            elif not user['USERPASSWORD'] == password:
+            elif not sha256_crypt.verify(password, user['USERPASSWORD']):
                 error = 'Incorrect password.'
 
             if error is None:
