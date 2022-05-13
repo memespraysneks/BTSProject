@@ -53,7 +53,7 @@
         {% for day in week %}
         <div class="day" id="day_{{ day }}">
             <br>
-            <div class="event-for-month-day" style="font-family: 'Playfair Display', serif; margin-bottom: 20px;">
+            <div class="event-for-month-day" style="font-family: 'Fjalla One', sans-serif; margin-bottom: 20px;">
                 <h3 style="float: left;">Events for {{ month_name }} {{ day }}</h3>
             </div>
 
@@ -65,11 +65,11 @@
                             <p style="font-size: 18pt;">TITLE: {{ event[0] }}</p>
                             <br>
                             <p>{{ event[1] }}</p>
-                            <!-- <button class="delete-button" onclick="deleteEvent(event)">Delete this event</button> -->
+                            <button class="delete-button" onclick="deleteEvent(event)">Delete this event</button>
                             <hr class="hr">
                         </div>
                         <div align="right">
-                            <button class="delete-button" onclick="deleteEvent(event)">Delete this event</button>
+                            <!-- <button class="delete-button" onclick="deleteEvent(event)">Delete this event</button> -->
                         </div>   
                         <!-- <button class="delete-button" onclick="deleteEvent(event)">Delete this event</button> -->
                     </div>

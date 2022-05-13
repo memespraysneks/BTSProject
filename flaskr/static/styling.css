@@ -125,6 +125,8 @@ body {
 /* week.html start */
 
 .week-box {
+    /* height: 80%;
+    overflow: auto; */
     background-color: #D8F3FA;
     width: 75%;
     position: relative;
@@ -137,7 +139,7 @@ body {
 
 .week-title {
     color: 	#4682B4;
-    font-family: 'Berkshire Swash', cursive;
+    font-family: 'Fjalla One', sans-serif;
     text-shadow: 2px 2px #F0FFFF;
 }
 
