@@ -38,7 +38,7 @@
                     {% endif %}
                     {% set fdate = year|string + '-' + month|string + '-' + week[i]|string %}
                     {% if fdate in event_counts %}
-                        <p>{{ event_counts[fdate] }} Event{% if event_counts[fdate] > 1 %}s{% endif %}</p>
+                        <p id="event-count-{{week[i]}}">{{ event_counts[fdate] }} Event{% if event_counts[fdate] > 1 %}s{% endif %}</p>
                     {% endif %}
                 </div>
             {% endfor %}
@@ -59,7 +59,7 @@
 
             {% for event in events %}
                 {% if event[2]|int == year and event[3]|int == month and event[4]|int == day %}
-                    <div class="event" data-eventid="{{event[5]}}"> 
+                    <div class="event" data-eventid="{{event[5]}}" data-day="{{ day }}"> 
                         <!-- style="display:flex; flex-direction: row; -->
                         <div align="left" class="event-line">
                             <p style="font-size: 18pt;">TITLE: {{ event[0] }}</p>
@@ -101,12 +101,22 @@
         function deleteEvent(event) {
             let ev = event.target.closest(".event")
             let eventid = ev.dataset.eventid
+            let day = ev.dataset.day
 
             const xhr = new XMLHttpRequest()
             xhr.open("GET", `${window.location.origin}/deleteEvent/${eventid}`)
             xhr.onload = () => {
                 if (xhr.status === 200) {
                     ev.remove() //Remove the element from html
+                    let target = document.querySelector(`#event-count-${day}`)
+                    let content = target.textContent
+                    let arr = content.split(" ")
+                    let count = parseInt(arr[0])
+                    if (--count <= 0) {
+                        target.textContent = ""
+                    } else {
+                        target.textContent = `${count} ${count > 1 ? "Events" : "Event"}`
+                    }
                 }
             }
             xhr.send()
