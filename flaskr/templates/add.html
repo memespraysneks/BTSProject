@@ -7,37 +7,44 @@
       <meta http-equiv="X-UA-Compatible" content="IE=edge">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <link rel="stylesheet" href="{{ url_for('static', filename='styling.css') }}">
-      <title>Simply Calander</title>
+      <title>Add Event</title>
 </head>
 <body>
-    {% if title %}
-    <h2>Your event: {{ title }} </h2>
-    <p>Event Detail: {{ description }}</p>
-    {% else %}
-    <h1>Please type your schedule</h1>
-    <br/>
-    <form method="POST">
-        {{ form.hidden_tag() }}
-        
-        {{ form.title.label }}
-        
-        {{ form.title(
-            class="form-control"
-        ) }}
+    <div class="add-container">
+        {% if title %}
+            <h2>Your event: {{ title }} </h2>
+            <p>Event Detail: {{ description }}</p>
+        {% else %}
+            <h2>Please type your schedule</h2>
+            <br/>
+            <form method="POST">
+                {{ form.hidden_tag() }}
+                
+                {{ form.title.label }}
+                
+                {{ form.title(
+                    class="form-control",
+                    placeholder="event title"
+                ) }}
 
-        {{ form.description.label }}
+                </br>
 
-        {{ form.description(
-            class="form-control"
-        )}}
-        <br/>
+                {{ form.description.label }}
 
-        {{ form.submit(
-            class="btn btn-primary"
-        ) }}
+                {{ form.description(
+                    class="form-control",
+                    placeholder="description"
+                )}}
+                <br>
 
-    </form>
-{% endif %}
+                {{ form.submit(
+                    class="btn btn-primary add-page-button"
+                ) }}
+                <br>
+
+            </form>
+        {% endif %}
+    </div>
 </body>
 </html>
 {% endblock %}

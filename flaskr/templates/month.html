@@ -5,25 +5,49 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Month of {{ month_name }}</title>
+    <link rel="shortcut icon" href="{{ url_for('static', filename='icon.ico') }}">
 </head>
 <body>
-    <h1>Month of {{ month_name }}</h1>
-    <div class="week_wrap" style="display: flex; flex-direction: column; gap: 20px;">
-        {% set weekdays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'] %}
-        {% for j in range(0, month_data| length) %}
-            {% set week = month_data[j] %}
-            <div class="week" data-weekid="{{month_id}}-{{j}}" style="display: flex; flex-direction: row; gap: 20px; justify-content: space-evenly; background-color: grey;">
-                {% for i in range(0, week| length) %}
-                    <div style="display: flex; flex-direction: column; background-color: bisque; flex-grow: 1; align-items: center;">
-                        <p>{{ weekdays[i] }}</p>
-                        {% if week[i] > 0 %}
-                        <p><strong>{{ week[i] }}</strong></p>
-                        {% endif %}
-                    </div>
-                {% endfor %}
-            </div>
-        {% endfor %}
+    {% extends 'index.html' %}
+    {% block content %}
+    <div class="month-box">
+        <div class="month-name">
+            <ul>
+                <li>
+                    {{ month_name }}<br>
+                    <span>2022</span>
+                </li>
+            </ul>
+            
+        </div>
+
+        <div class="week_wrap">
+            <ul class="weekdays">
+                <li style="color: #CD5C5C;">Sun</li>
+                <li>Mon</li>
+                <li>Tue</li>
+                <li>Wen</li>
+                <li>Thu</li>
+                <li>Fri</li>
+                <li style="color: #4682B4;">Sat</li>
+            </ul>
+
+            {% for j in range(0, month_data| length) %}
+                {% set week = month_data[j] %}
+                <div class="week" data-weekid="{{month_id}}-{{j}}">
+                    {% for i in range(0, week| length) %}
+                        <div class="week-display">
+
+                            {% if week[i] > 0 %}
+                            <p>{{ week[i] }}</p>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endfor %}
+        </div>
     </div>
+
     <script>
         document.querySelector(".week_wrap").addEventListener("click", (event) => {
             let weekid = event.target.closest(".week").dataset.weekid
@@ -32,5 +56,6 @@
             }
         })
     </script>
+    {% endblock %}
 </body>
 </html>

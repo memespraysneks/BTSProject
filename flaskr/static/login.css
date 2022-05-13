@@ -1,0 +1,7 @@
+body {
+    background-image: url("login-bg.jpg");
+    background-size: cover;
+    display: gird;
+    align-items: center;
+    justify-items: center;
+}
