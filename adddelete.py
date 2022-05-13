@@ -19,6 +19,9 @@ class EventForm(FlaskForm):
 
 @adddelete.route('/add/<string:date>', methods=['GET', 'POST'])
 def add(date):
+    if not "user_id" in session:
+        return redirect("/login")
+
     title = None
     description = None
     form = EventForm()
@@ -31,7 +34,7 @@ def add(date):
            f'INSERT OR IGNORE INTO EVENTS(EVENTNAME, EVENTDESCRIPTION, EVENTDATE, USERID) VALUES(?,?,?,?)', (title,description, date, session['user_id'])
         )
         db.commit()
-        
+        print("HERE")
 
         form.title.data = ''
         form.description.data = ''
