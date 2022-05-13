@@ -84,10 +84,11 @@
 
         document.querySelector(".week").addEventListener("click", (event) => {
             let day = event.target.closest(".day")
-            if (!day) return
+            if (!day) return 
             let date = day.dataset.date
             let day_num = day.dataset.day
-
+            if (day_num == "0") return
+            
             targetdate = date
             ShowAddButton()
             document.querySelectorAll(`.day`).forEach((e) => e.classList.remove("shown-day"))
