@@ -35,9 +35,10 @@ def runTheData ():
         hashedpassword = sha256_crypt.hash(password)
         print(email, username, hashedpassword)
         db = get_db()
-        if not db.execute(f'SELECT * FROM USERS WHERE "{username}" == USERNAME'):
-            cursor = db.execute(
-            f'INSERT INTO USERS(USERNAME, USERPASSWORD, USEREMAIL) VALUES(?,?,?)', (username, hashedpassword, email)
+        cursor = db.cursor()
+        if True:
+            cursor.execute(
+            f"INSERT INTO USERS(USERNAME, USERPASSWORD, USEREMAIL) VALUES(%s, %s, %s)", (username, hashedpassword, email)
             )
             db.commit()
         else: #Fix this later

@@ -19,9 +19,10 @@ def edit(eventid):
     
     form = EditForm()
     db = get_db()
+    cursor = db.cursor()
 
     if form.validate_on_submit():
-        db.execute(f"UPDATE EVENTS SET EVENTNAME = ?, EVENTDESCRIPTION = ? WHERE USERID={session['user_id']} AND EVENTID={eventid}", (form.title.data, form.description.data))
+        cursor.execute(f"UPDATE EVENTS SET EVENTNAME = %s, EVENTDESCRIPTION = %s WHERE USERID={session['user_id']} AND EVENTID={eventid}", (form.title.data, form.description.data))
         db.commit()
 
         redirect_loc = request.args.get("from")
@@ -29,9 +30,11 @@ def edit(eventid):
             return redirect(redirect_loc)
 
     else:
-        eventdetails = db.execute(f"SELECT EVENTNAME, EVENTDESCRIPTION FROM EVENTS WHERE USERID={session['user_id']} AND EVENTID={eventid}").fetchone()
-        form.title.data = eventdetails["EVENTNAME"]
-        form.description.data = eventdetails["EVENTDESCRIPTION"]
+
+        cursor.execute(f"SELECT EVENTNAME, EVENTDESCRIPTION FROM EVENTS WHERE USERID={session['user_id']} AND EVENTID={eventid}")
+        eventdetails = cursor.fetchone()
+        form.title.data = eventdetails[0]
+        form.description.data = eventdetails[1]
 
     return render_template("edit.html",
         form = form)

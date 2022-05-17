@@ -27,11 +27,11 @@ def add(date):
         title = form.title.data
         description = form.description.data
         db = get_db()
-        db.execute(
-           f'INSERT OR IGNORE INTO EVENTS(EVENTNAME, EVENTDESCRIPTION, EVENTDATE, USERID) VALUES(?,?,?,?)', (title,description, date, session['user_id'])
+        db.cursor().execute(
+           'INSERT INTO EVENTS(EVENTNAME, EVENTDESCRIPTION, EVENTDATE, USERID) VALUES(%s, %s, %s, %s)', (title,description, date, int(session['user_id']))
         )
         db.commit()
-        
+
 
         form.title.data = ''
         form.description.data = ''
@@ -52,7 +52,7 @@ def update():
 @adddelete.route("/deleteEvent/<int:eventid>", methods=["GET"])
 def deletestuff(eventid):
     db = get_db()
-    db.execute(f'DELETE FROM EVENTS WHERE EVENTID == {eventid}')
+    db.cursor().execute(f'DELETE FROM EVENTS WHERE EVENTID = {eventid}')
     db.commit()
     return "ok"
 
