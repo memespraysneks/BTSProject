@@ -35,7 +35,16 @@ def runTheData ():
         hashedpassword = sha256_crypt.hash(password)
         print(email, username, hashedpassword)
         db = get_db()
-        if not db.execute(f'SELECT * FROM USERS WHERE "{username}" == USERNAME'):
+        cur = db.cursor() 
+        try:
+            cur.execute(f'SELECT COUNT(*) FROM USERS WHERE "{username}" == USERNAME') 
+            numberOfRows = cur.fetchone()
+            numberOfRows = numberOfRows[0]
+        except:
+            pass
+        cur.close()
+        print(numberOfRows)
+        if numberOfRows == 0:
             cursor = db.execute(
             f'INSERT INTO USERS(USERNAME, USERPASSWORD, USEREMAIL) VALUES(?,?,?)', (username, hashedpassword, email)
             )
