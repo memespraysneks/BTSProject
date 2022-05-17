@@ -6,6 +6,8 @@ from dbconnection import get_db
 
 calendarpage = Blueprint("calendarpage", __name__)
 
+db = get_db()
+
 def get_month_data(year, month):
     month_name = datetime.datetime(year, month, 1).strftime("%B")
 
@@ -50,7 +52,7 @@ def week_date(year, month, week):
 
 def get_user_events_by_date(user_id):
     events = {}
-    cursor = get_db().cursor()
+    cursor = db.cursor()
     cursor.execute(f"SELECT EVENTDATE, COUNT(*) as COUNT FROM EVENTS WHERE USERID={user_id} GROUP BY EVENTDATE")
     for row in cursor.fetchall():
         events[f"{row[0].year}-{row[0].month}-{row[0].day}"] = row[1]
@@ -59,7 +61,7 @@ def get_user_events_by_date(user_id):
 
 def get_user_events(user_id):
     events = []
-    cursor = get_db().cursor()
+    cursor = db.cursor()
     cursor.execute(f"SELECT * FROM EVENTS WHERE USERID={user_id}")
     for row in cursor.fetchall():
         split_date = row[3]

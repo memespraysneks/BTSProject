@@ -5,6 +5,7 @@ from wtforms.validators import DataRequired
 from dbconnection import get_db
 
 editevent = Blueprint('editevent', __name__)
+db = get_db()
 
 # create a Form Class
 class EditForm(FlaskForm):
@@ -18,7 +19,6 @@ def edit(eventid):
         return redirect("/login")
     
     form = EditForm()
-    db = get_db()
     cursor = db.cursor()
 
     if form.validate_on_submit():

@@ -14,6 +14,7 @@ import json
 from passlib.hash import sha256_crypt
 
 loginpage = Blueprint('loginpage', __name__)
+db = get_db()
 
 class UserForm(FlaskForm):
     username = StringField("Username", validators=[DataRequired()], render_kw={"placeholder": "username"})
@@ -35,7 +36,7 @@ def login():
             form.password.data = ''
             
             error = None
-            user = get_db().execute(
+            user = db.execute(
                 'SELECT * FROM USERS WHERE USERNAME = ?', (username,)
             ).fetchone()
 

@@ -22,6 +22,7 @@ class RegisterForm(FlaskForm):
     submit = SubmitField("Submit")
 
 registerpage = Blueprint('registerpage', __name__)
+db = get_db()
 
 #TODO : SQL ERROR HANDLING
 @registerpage.route("/register", methods=('GET', 'POST'))
@@ -34,13 +35,12 @@ def runTheData ():
         password = form.password.data
         hashedpassword = sha256_crypt.hash(password)
         print(email, username, hashedpassword)
-        db = get_db()
+        
         cursor = db.cursor()
         if True:
             cursor.execute(
             f"INSERT INTO USERS(USERNAME, USERPASSWORD, USEREMAIL) VALUES(%s, %s, %s)", (username, hashedpassword, email)
             )
-            db.commit()
         else: #Fix this later
             return redirect("/register")
 
