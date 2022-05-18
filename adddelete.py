@@ -1,6 +1,6 @@
 from flask import Flask, redirect, render_template, Blueprint, request, session
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField
+from wtforms import StringField, SubmitField, TimeField
 from wtforms.validators import DataRequired
 from dbconnection import get_db
 
@@ -11,6 +11,7 @@ db = get_db()
 class EventForm(FlaskForm):
     title = StringField("What is your event?", validators=[DataRequired()])
     description = StringField("Please type your event details", validators=[DataRequired()])
+    time = TimeField("What time is your event?", validators=[DataRequired()])
     submit = SubmitField("Submit")
 
 #@adddelete.route('/')
@@ -30,9 +31,10 @@ def add(date):
     if form.validate_on_submit():
         title = form.title.data
         description = form.description.data
+        time = form.time.data
         
         db.cursor().execute(
-           'INSERT INTO EVENTS(EVENTNAME, EVENTDESCRIPTION, EVENTDATE, USERID) VALUES(%s, %s, %s, %s)', (title,description, date, int(session['user_id']))
+           'INSERT INTO EVENTS(EVENTNAME, EVENTDESCRIPTION, EVENTDATE, USERID) VALUES(%s, %s, %s, %s)', (title,description, f"{date} {time}", int(session['user_id']))
         )
 
         form.title.data = ''
