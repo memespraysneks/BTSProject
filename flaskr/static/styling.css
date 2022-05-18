@@ -33,7 +33,7 @@ body {
     margin-bottom: 50px;
 }
 
-.login-form {
+.login-form, .register-form {
     background-color: #D8F3FA;
     font-family: 'Fjalla One', sans-serif;
     font-size: 12pt;
@@ -137,7 +137,7 @@ body {
     box-shadow: 15px 15px 1px #3eadcf, 15px 15px 1px 2px rgba(0,0,0,1);
 }
 
-.week-title {
+.week-title, .register-title {
     color: 	#4682B4;
     font-family: 'Fjalla One', sans-serif;
     text-shadow: 2px 2px #F0FFFF;
