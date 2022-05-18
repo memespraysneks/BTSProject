@@ -6,6 +6,7 @@ from login import loginpage
 from dbconnection import setup_db
 from register import registerpage
 from editevent import editevent
+import os
 
 def create_app(test=False):
     app = Flask(__name__, instance_relative_config=True)
@@ -15,7 +16,7 @@ def create_app(test=False):
     
     if test:
         app.config["WTF_CSRF_ENABLED"] = False
-        app.config["TEST_DB"] = True
+        os.environ["FLASKR_TEST_DB"] = "True"
 
     app.register_blueprint(calendarpage)
     app.register_blueprint(adddelete)
