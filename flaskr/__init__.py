@@ -1,11 +1,6 @@
 from flask import Flask, redirect, render_template, url_for
-from calendarpage import calendarpage
-from adddelete import adddelete
-from database import databaseAPI
-from login import loginpage
 from dbconnection import setup_db
-from register import registerpage
-from editevent import editevent
+
 import os
 
 def create_app(test=False):
@@ -17,6 +12,14 @@ def create_app(test=False):
     if test:
         app.config["WTF_CSRF_ENABLED"] = False
         os.environ["FLASKR_TEST_DB"] = "True"
+
+    # Please define imports for pages here, BELOW THE os.environ :) Otherwise i will get mad - Liam
+    from register import registerpage
+    from editevent import editevent
+    from calendarpage import calendarpage
+    from adddelete import adddelete
+    from database import databaseAPI
+    from login import loginpage
 
     app.register_blueprint(calendarpage)
     app.register_blueprint(adddelete)
@@ -33,7 +36,3 @@ def create_app(test=False):
         return render_template("index.html")
 
     return app
-
-app = create_app()
-# if __name__ == "__main__":
-#     create_app()

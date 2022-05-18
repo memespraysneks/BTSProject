@@ -1,4 +1,3 @@
-import flask
 from dbconnection import get_db, setup_db
 from flaskr import create_app
 
