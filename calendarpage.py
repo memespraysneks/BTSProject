@@ -6,6 +6,8 @@ from dbconnection import get_db
 
 calendarpage = Blueprint("calendarpage", __name__)
 
+db = get_db()
+
 def get_month_data(year, month):
     month_name = datetime.datetime(year, month, 1).strftime("%B")
 
@@ -50,16 +52,20 @@ def week_date(year, month, week):
 
 def get_user_events_by_date(user_id):
     events = {}
-    for row in get_db().execute(f"SELECT EVENTDATE, COUNT(*) as COUNT FROM EVENTS WHERE USERID={user_id} GROUP BY EVENTDATE"):
-        events[row["EVENTDATE"]] = row["COUNT"]
+    cursor = db.cursor()
+    cursor.execute(f"SELECT EVENTDATE, COUNT(*) as COUNT FROM EVENTS WHERE USERID={user_id} GROUP BY EVENTDATE")
+    for row in cursor.fetchall():
+        events[f"{row[0].year}-{row[0].month}-{row[0].day}"] = row[1]
 
     return events
 
 def get_user_events(user_id):
     events = []
-    for row in get_db().execute(f"SELECT * FROM EVENTS WHERE USERID={user_id}"):
-        split_date = row["EVENTDATE"].split("-")
-        events.append((row["EVENTNAME"], row["EVENTDESCRIPTION"], split_date[0], split_date[1], split_date[2], row["EVENTID"]))
+    cursor = db.cursor()
+    cursor.execute(f"SELECT * FROM EVENTS WHERE USERID={user_id}")
+    for row in cursor.fetchall():
+        split_date = row[3]
+        events.append((row[1], row[2], split_date.year, split_date.month, split_date.day, row[0]))
     
     return events
 

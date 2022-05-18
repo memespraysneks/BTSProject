@@ -5,6 +5,7 @@ from wtforms.validators import DataRequired
 from dbconnection import get_db
 
 adddelete = Blueprint('adddelete', __name__)
+db = get_db()
 
 # create a Form Class
 class EventForm(FlaskForm):
@@ -26,12 +27,10 @@ def add(date):
     if form.validate_on_submit():
         title = form.title.data
         description = form.description.data
-        db = get_db()
-        db.execute(
-           f'INSERT OR IGNORE INTO EVENTS(EVENTNAME, EVENTDESCRIPTION, EVENTDATE, USERID) VALUES(?,?,?,?)', (title,description, date, session['user_id'])
-        )
-        db.commit()
         
+        db.cursor().execute(
+           'INSERT INTO EVENTS(EVENTNAME, EVENTDESCRIPTION, EVENTDATE, USERID) VALUES(%s, %s, %s, %s)', (title,description, date, int(session['user_id']))
+        )
 
         form.title.data = ''
         form.description.data = ''
@@ -51,8 +50,6 @@ def update():
 
 @adddelete.route("/deleteEvent/<int:eventid>", methods=["GET"])
 def deletestuff(eventid):
-    db = get_db()
-    db.execute(f'DELETE FROM EVENTS WHERE EVENTID == {eventid}')
-    db.commit()
+    db.cursor().execute(f'DELETE FROM EVENTS WHERE EVENTID = {eventid}')
     return "ok"
 
