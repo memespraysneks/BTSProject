@@ -17,3 +17,4 @@ jobs:
         with:
           app: simplycalendar
           key: 77955c67-377c-497b-93f2-f3493b2b58f6
+          
