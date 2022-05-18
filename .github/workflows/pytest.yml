@@ -38,13 +38,3 @@ jobs:
       - name: Run tests
         run: |
           pytest -v
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-  
-    steps:
-      - name: Deploy to Heroku
-        uses: dentarg/heroku@v1
-        with:
-          app: simplycalendar
-          key: 77955c67-377c-497b-93f2-f3493b2b58f6
