@@ -28,6 +28,7 @@ def test_edit_event():
         response = client.post("/edit/1?from=UNIT_TEST", data={
             "title": "Test Title234",
             "description": "Test Desc234",
+            "time": "03:33"
         })
 
         assert response.status_code == 302
