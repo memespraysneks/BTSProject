@@ -1,4 +1,4 @@
-from flask import Flask, redirect, render_template, Blueprint, request, session
+from flask import redirect, render_template, Blueprint, request, session
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField
 from wtforms.validators import DataRequired
@@ -15,9 +15,7 @@ class EditForm(FlaskForm):
 
 @editevent.route('/edit/<int:eventid>', methods=['GET', 'POST'])
 def edit(eventid):
-    if not "user_id" in session:
-        return redirect("/login")
-    
+
     form = EditForm()
     cursor = db.cursor()
 
@@ -38,3 +36,14 @@ def edit(eventid):
 
     return render_template("edit.html",
         form = form)
+
+
+
+
+
+
+
+
+
+
+
