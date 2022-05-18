@@ -20,6 +20,9 @@ class EventForm(FlaskForm):
 
 @adddelete.route('/add/<string:date>', methods=['GET', 'POST'])
 def add(date):
+    if not "user_id" in session:
+        return redirect("/login")
+
     title = None
     description = None
     form = EventForm()
