@@ -36,19 +36,20 @@ def login():
             form.password.data = ''
             
             error = None
-            user = db.execute(
-                'SELECT * FROM USERS WHERE USERNAME = ?', (username,)
-            ).fetchone()
-
+            cursor = db.cursor()
+            cursor.execute(
+                f"SELECT * FROM USERS WHERE USERNAME = '{username}'"
+            )
+            user = cursor.fetchone()
 
             if user is None:
                 error = 'Incorrect username.'
-            elif not sha256_crypt.verify(password, user['USERPASSWORD']):
+            elif not sha256_crypt.verify(password, user[2]):
                 error = 'Incorrect password.'
 
             if error is None:
                 session.clear()
-                session['user_id'] = user['USERID']
+                session['user_id'] = user[0]
                 return redirect("/month")
 
     return render_template('login.html',
