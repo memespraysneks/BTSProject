@@ -26,7 +26,7 @@ def test_add_event():
         response = client.post("/add/2022-01-02?from=UNIT_TEST", data={
             "title": "Test Title234",
             "description": "Test Desc234",
-            "time": "12:00:00"
+            "time": "12:00"
         })
 
         assert response.status_code == 302
