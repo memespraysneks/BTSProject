@@ -27,11 +27,21 @@
                 class="form-control"
             )}}
             <br/>
-
             {{ form.submit(
                 class="btn btn-primary add-page-button"
             ) }}
             <br>
+    {{ form.description(
+        class="form-control"
+    )}}
+
+    {{ form.time.label }}
+
+    {{ form.time(
+        class="form-control"
+    )}}
+
+    <br/>
 
 
         </form>

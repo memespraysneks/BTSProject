@@ -14,6 +14,7 @@ import json
 from passlib.hash import sha256_crypt
 
 loginpage = Blueprint('loginpage', __name__)
+db = get_db()
 
 class UserForm(FlaskForm):
     username = StringField("Username", validators=[DataRequired()], render_kw={"placeholder": "username"})
@@ -35,19 +36,20 @@ def login():
             form.password.data = ''
             
             error = None
-            user = get_db().execute(
-                'SELECT * FROM USERS WHERE USERNAME = ?', (username,)
-            ).fetchone()
-
+            cursor = db.cursor()
+            cursor.execute(
+                f"SELECT * FROM USERS WHERE USERNAME = '{username}'"
+            )
+            user = cursor.fetchone()
 
             if user is None:
                 error = 'Incorrect username.'
-            elif not sha256_crypt.verify(password, user['USERPASSWORD']):
+            elif not sha256_crypt.verify(password, user[2]):
                 error = 'Incorrect password.'
 
             if error is None:
                 session.clear()
-                session['user_id'] = user['USERID']
+                session['user_id'] = user[0]
                 return redirect("/month")
 
     return render_template('login.html',
