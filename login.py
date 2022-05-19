@@ -56,3 +56,8 @@ def login():
         username = username,
         password = password,
         form = form)
+
+@loginpage.route("/logout")
+def logout():
+    session.clear()
+    return redirect('/login')
