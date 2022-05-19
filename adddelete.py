@@ -14,11 +14,6 @@ class EventForm(FlaskForm):
     time = TimeField("What time is your event?", validators=[DataRequired()])
     submit = SubmitField("Submit")
 
-#@adddelete.route('/')
-#def index():
-#    return render_template("home.html")
-
-
 @adddelete.route('/add/<string:date>', methods=['GET', 'POST'])
 def add(date):
     if not "user_id" in session:
@@ -48,10 +43,6 @@ def add(date):
         title = title,
         description = description,
         form = form)
-
-@adddelete.route('/update', methods=['GET', 'POST'])
-def update():
-    pass
 
 @adddelete.route("/deleteEvent/<int:eventid>", methods=["GET"])
 def deletestuff(eventid):
