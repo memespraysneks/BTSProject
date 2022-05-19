@@ -48,6 +48,18 @@ def week_date(year, month, week):
     
     return render_template("week.html", event_counts=event_counts, events=events, year=year, month=month, week=week_dates, month_name=month_name, week_num=week)
 
+@calendarpage.route("/todo")
+def show_todo():
+    if not "user_id" in session:
+        return redirect("/login")
+
+    user_id = session["user_id"]
+    events = get_user_events(user_id)
+    event_counts = get_user_events_by_date(user_id=user_id)
+    
+    return render_template("todo.html", event_counts=event_counts, events=events)
+
+
 def get_user_events_by_date(user_id):
     events = {}
     for row in get_db().execute(f"SELECT EVENTDATE, COUNT(*) as COUNT FROM EVENTS WHERE USERID={user_id} GROUP BY EVENTDATE"):

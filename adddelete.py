@@ -12,11 +12,6 @@ class EventForm(FlaskForm):
     description = StringField("Please type your event details", validators=[DataRequired()])
     submit = SubmitField("Submit")
 
-#@adddelete.route('/')
-#def index():
-#    return render_template("home.html")
-
-
 @adddelete.route('/add/<string:date>', methods=['GET', 'POST'])
 def add(date):
     title = None
@@ -44,10 +39,6 @@ def add(date):
         title = title,
         description = description,
         form = form)
-
-@adddelete.route('/update', methods=['GET', 'POST'])
-def update():
-    pass
 
 @adddelete.route("/deleteEvent/<int:eventid>", methods=["GET"])
 def deletestuff(eventid):
