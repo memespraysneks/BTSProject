@@ -27,8 +27,9 @@ def month_date(year, month):
         return redirect("/login")
 
     month_name, month_calendar = get_month_data(year, month)
+    last_month, next_month = get_last_next_month(year, month)
     
-    return render_template("month.html", month_id=f"{year}-{month}", month_data=month_calendar, month_name=month_name)
+    return render_template("month.html", month_id=f"{year}-{month}", month_data=month_calendar, month_name=month_name, last_month=last_month, next_month=next_month)
 
 @calendarpage.route("/week")
 def week():
@@ -47,8 +48,10 @@ def week_date(year, month, week):
     user_id = session["user_id"]
     events = get_user_events(user_id)
     event_counts = get_user_events_by_date(user_id=user_id)
+
+    last_week, next_week = get_last_next_week(year, month, week)
     
-    return render_template("week.html", event_counts=event_counts, events=events, year=year, month=month, week=week_dates, month_name=month_name, week_num=week)
+    return render_template("week.html", event_counts=event_counts, events=events, year=year, month=month, week=week_dates, month_name=month_name, week_num=week, last_week=last_week, next_week=next_week)
 
 @calendarpage.route("/todo")
 def show_todo():
@@ -81,3 +84,45 @@ def get_user_events(user_id):
     
     return events
 
+def get_last_next_week(year, month, week):
+    name, mcal = get_month_data(year, month)
+
+    last_month = month
+    next_month = month
+    last_month_year = year
+    next_month_year = year
+    next_week = week + 1
+    last_week = week - 1
+
+    if next_week >= len(mcal):
+        next_month += 1
+        next_week = 0
+
+        if next_month > 12:
+            next_month_year += 1
+            next_month = 1
+    if last_week < 0:
+        last_month -= 1
+        if last_month < 1:
+            last_month_year -= 1
+            last_month = 12
+
+        lname, lmcal = get_month_data(last_month_year, last_month)
+        last_week = len(lmcal) - 1
+    
+    return f"{last_month_year}-{last_month}-{last_week}", f"{next_month_year}-{next_month}-{next_week}"
+
+def get_last_next_month(year, month):
+    last_month = month - 1
+    next_month = month + 1
+    last_month_year = year
+    next_month_year = year
+
+    if next_month > 12:
+        next_month_year += 1
+        next_month = 1
+    if last_month < 1:
+        last_month_year -= 1
+        last_month = 12
+    
+    return f"{last_month_year}-{last_month}", f"{next_month_year}-{next_month}"
