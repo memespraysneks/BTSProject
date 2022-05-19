@@ -47,7 +47,7 @@
         <!-- dividier -->
         <hr class="hr">
 
-        <button class="add-button" id="add_button" style="display: none;">Add New Event</button>
+        <button class="add-button" id="add_button" style="display: none; margin: 20px auto;">Add New Event</button>
 
 
         {% for day in week %}
@@ -63,17 +63,22 @@
                         <!-- style="display:flex; flex-direction: row; -->
                         <div align="left" class="event-line">
                             <p style="font-size: 18pt;">TITLE: {{ event[0] }}</p>
-                            <br>
+                            
                             <p>{{ event[1] }}</p>
-                            <hr class="hr">  
+                            
                         </div>
-                        <button class="delete-button" onclick="deleteEvent(event)">Delete</button>
-                        <button class="edit-button" onclick="editevent(event)">Edit</button>
-                        
-                        <div align="right">
+
+                        <div class="button-line">
+                            <button class="edit-button" onclick="editevent(event)">Edit</button>
+                            <button class="delete-button" onclick="deleteEvent(event)">Delete</button>
+                            <!-- <button class="edit-button" onclick="editevent(event)">Edit</button> -->
+                            
+                        </div>
+                        <hr class="hr">
+                        <!-- <div align="right"> -->
                             
                             <!-- <button class="delete-button" onclick="deleteEvent(event)">Delete this event</button> -->
-                        </div>
+                        <!-- </div> -->
                         <!-- <button class="delete-button" onclick="deleteEvent(event)">Delete this event</button> -->
                     </div>
                 {% endif %}
