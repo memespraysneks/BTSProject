@@ -18,14 +18,14 @@
         <div class="shadow p-3 mb-5 bg-body rounded event" data-eventid="{{event[5]}}">
             <div class="todo-item" align="left">
                 <h3>Title: {{ event[0] }}</h3>
+                <p>{{ event[6] }}</p>
                 <p>{{ event[1] }}</p>
-                <button class="delete-button" onclick="deleteEvent(event)">Delete</button>
-            <button class="edit-button" onclick="editevent(event)" style="margin-right: 20px;">Edit</button>
             </div>
-            <!-- <button class="delete-button" onclick="deleteEvent(event)">Delete</button>
-            <button class="edit-button" onclick="editevent(event)" style="margin-right: 20px;">Edit</button> -->
-            <br>
-            <br>
+            <div class="button-line">
+                <button class="edit-button" onclick="editevent(event)" style="margin: 0 0 6px;">Edit</button>
+                <button class="delete-button" onclick="deleteEvent(event)" style="margin: 0 0 6px;">Delete</button>
+            </div>
+
         </div>
         {% endfor %}
     </div>

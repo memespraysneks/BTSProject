@@ -13,15 +13,19 @@
     
     {% block content %}
     <div class="week-box">
-        <div class="week-title">    
-            <h1>Week {{ week_num+1 }} of {{ month_name }}</h1>
+        <div class="week-title">
+            <ul>
+                <li class="prev"><a href="/week/{{last_week}}">&#10094;</a></li>
+                <li class="next"><a href="/week/{{next_week}}">&#10095;</a></li>
+                <h1 class="week-of" align="center">Week {{ week_num+1 }} of {{ month_name }}</h1>
+            </ul>
             <br>
         </div>
 
-        <div style="justify-content: space-evenly; display: flex;">
+        <!-- <div style="justify-content: space-evenly; display: flex;">
             <a href="/week/{{last_week}}">Last Week</a>
             <a href="/week/{{next_week}}">Next Week</a>
-        </div>
+        </div> -->
 
         <ul class="weekdays">
             <li style="color: #CD5C5C;">Sun</li>
@@ -52,7 +56,7 @@
         <!-- dividier -->
         <hr class="hr">
 
-        <button class="add-button" id="add_button" style="display: none;">Add New Event</button>
+        <button class="add-button" id="add_button" style="display: none; margin: 20px auto;">Add New Event</button>
 
 
         {% for day in week %}
@@ -68,19 +72,18 @@
                         <!-- style="display:flex; flex-direction: row; -->
                         <div align="left" class="event-line">
                             <p style="font-size: 18pt;">TITLE: {{ event[0] }}</p>
-                            <br>
-                            <p>{{ event[1] }}</p>
-                            <hr class="hr">  
                             <p>{{ event[6] }}</p>
-                            <hr class="hr">
+                            <p>{{ event[1] }}</p>
                         </div>
-                        <button class="delete-button" onclick="deleteEvent(event)">Delete</button>
-                        <button class="edit-button" onclick="editevent(event)">Edit</button>
-                        
-                        <div align="right">
+                        <div class="button-line">
+                            <button class="edit-button" onclick="editevent(event)">Edit</button>
+                            <button class="delete-button" onclick="deleteEvent(event)">Delete</button>
+                        </div>
+                        <hr class="hr">
+                        <!-- <div align="right"> -->
                             
                             <!-- <button class="delete-button" onclick="deleteEvent(event)">Delete this event</button> -->
-                        </div>
+                        <!-- </div> -->
                         <!-- <button class="delete-button" onclick="deleteEvent(event)">Delete this event</button> -->
                     </div>
                 {% endif %}

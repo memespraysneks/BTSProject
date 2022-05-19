@@ -60,6 +60,16 @@ body {
     text-align: center;
 }
 
+.month-name .prev {
+    float: left;
+    padding-top: 10px;
+}
+
+.month-name .next {
+    float: right;
+    padding-top: 10px;
+}
+
 .month-name ul {
     margin: 0;
     padding: 0;
@@ -143,6 +153,22 @@ body {
     text-shadow: 2px 2px #F0FFFF;
 }
 
+.week-title .prev {
+    float: left;
+    padding-top: 10px;
+}
+
+.week-title .next {
+    float: right;
+    padding-top: 10px;
+}
+
+.week-title ul {
+    margin: 0;
+    padding: 0;
+}
+
+
 .day, .week-event, .day-event {
     display: none;
 }
@@ -175,7 +201,7 @@ hr {
 .add-button, .edit-button {
     display: block;
     float: right;
-    margin: 20px auto;
+    margin: 0 0 60px;
     line-height: 24px;
     padding: 0 20px;
     background-color: #F5FFFA;
@@ -193,16 +219,23 @@ hr {
     border: 1px solid rgba(0,0,0,1);
 }
 
-.event-line {
+.event {
     display: flex;
     flex-direction: column;
-    float: left;
+    /* float: left; */
+}
+
+.button-line {
+    display: flex;
+    flex-direction: none;
+    gap: 15px;
 }
 
 .delete-button {
-    display: block;
+    /* display: block;
     float: right;
-    margin: 20px auto;
+    margin: 20px auto; */
+    margin: 0 0 60px;
     line-height: 24px;
     padding: 0 20px;
     background-color: #F5FFFA;
