@@ -12,7 +12,6 @@
 <body>
     <div class="add-container">
         <h1 class="edit-title">Edit Event</h1>
-        <br/>
         <form method="POST">
             {{ form.hidden_tag() }}
             
@@ -26,22 +25,16 @@
             {{ form.description(
                 class="form-control"
             )}}
+
+            {{ form.time.label }}
+
+            {{ form.time(
+                class="form-control"
+            )}}
             <br/>
             {{ form.submit(
                 class="btn btn-primary add-page-button"
             ) }}
-            <br>
-    {{ form.description(
-        class="form-control"
-    )}}
-
-    {{ form.time.label }}
-
-    {{ form.time(
-        class="form-control"
-    )}}
-
-    <br/>
 
 
         </form>

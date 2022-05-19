@@ -26,7 +26,7 @@ db = get_db()
 
 #TODO : SQL ERROR HANDLING
 @registerpage.route("/register", methods=('GET', 'POST'))
-def runTheData ():
+def runTheData():
     form = RegisterForm()
 
     if form.validate_on_submit():
