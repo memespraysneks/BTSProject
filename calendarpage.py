@@ -82,7 +82,7 @@ def get_user_events(user_id):
     cursor.execute(f"SELECT * FROM EVENTS WHERE USERID={user_id} ORDER BY EVENTDATE")
     for row in cursor.fetchall():
         split_date = row[3]
-        events.append((row[1], row[2], split_date.year, split_date.month, split_date.day, row[0], row[3].strftime("%I:%M:%S %p")))
+        events.append((row[1], row[2], split_date.year, split_date.month, split_date.day, row[0], row[3].strftime("%I:%M %p")))
     
     return events
 
