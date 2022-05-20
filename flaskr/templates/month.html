@@ -44,9 +44,13 @@
                 <div class="week" data-weekid="{{month_id}}-{{j}}">
                     {% for i in range(0, week| length) %}
                         <div class="week-display">
-
+                            {% set fdate = month_id + '-' + week[i]|string %}
                             {% if week[i] > 0 %}
                             <p>{{ week[i] }}</p>
+                            {% set fdate = month_id + '-' + week[i]|string %}
+                                {% if fdate in event_counts %}
+                                    <p id="event-count-{{week[i]}}">{{ event_counts[fdate] }} Event{% if event_counts[fdate] > 1 %}s{% endif %}</p>
+                                {% endif %}
                             {% endif %}
                         </div>
                     {% endfor %}
