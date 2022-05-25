@@ -31,7 +31,7 @@ def month_date(year, month):
     last_month, next_month = get_last_next_month(year, month)
     event_counts = get_user_events_by_date(user_id=user_id)
     
-    return render_template("month.html", event_counts=event_counts, month_id=f"{year}-{month}", month_data=month_calendar, month_name=month_name, last_month=last_month, next_month=next_month)
+    return render_template("month.html", event_counts=event_counts, month_id=f"{year}-{month}", month_data=month_calendar, month_name=month_name, year=year, last_month=last_month, next_month=next_month)
 
 @calendarpage.route("/week")
 def week():
