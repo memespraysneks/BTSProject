@@ -39,8 +39,8 @@ def runTheData():
         cur = db.cursor() 
         try:
             cur.execute(f'SELECT COUNT(*) FROM USERS WHERE "{username}" == USERNAME') 
-            numberOfRows = cur.fetchone()
-            numberOfRows = numberOfRows[0]
+            numberOfRow = cur.fetchone()
+            numberOfRows = numberOfRow[0]
         except:
             pass
         cur.close()
