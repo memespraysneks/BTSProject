@@ -10,29 +10,36 @@
       <title>Simply Calander</title>
 </head>
 <body>
-<h1>Edit event</h1>
-<br/>
-<form method="POST">
-    {{ form.hidden_tag() }}
-    
-    {{ form.title.label }}
-    
-    {{ form.title(
-        class="form-control"
-    ) }}
+    <div class="add-container">
+        <h1 class="edit-title">Edit Event</h1>
+        <form method="POST">
+            {{ form.hidden_tag() }}
+            
+            {{ form.title.label }}
+            {{ form.title(
+                class="form-control"
+            ) }}
+            <br>
 
-    {{ form.description.label }}
+            {{ form.description.label }}
+            {{ form.description(
+                class="form-control"
+            )}}
+            <br>
+            
+            {{ form.time.label }}
+            {{ form.time(
+                class="form-control"
+            )}}
+            <br/>
+            {{ form.submit(
+                class="btn btn-primary add-page-button"
+            ) }}
+            <br/>
 
-    {{ form.description(
-        class="form-control"
-    )}}
-    <br/>
 
-    {{ form.submit(
-        class="btn btn-primary"
-    ) }}
-
-</form>
+        </form>
+</div>
 </body>
 </html>
 {% endblock %}

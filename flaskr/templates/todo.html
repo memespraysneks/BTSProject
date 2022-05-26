@@ -1,0 +1,61 @@
+{% extends 'index.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-do List</title>
+</head>
+<body>
+
+
+    {% block content %}
+    <div class="to-do-form">
+        <h2 class="todo-title">To Do List</h2>
+        <br>
+        {% for event in events %}
+        <div class="shadow p-3 mb-5 bg-body rounded event" data-eventid="{{event[5]}}">
+            <div class="todo-item" align="left">
+                <h3>Title: {{ event[0] }}</h3>
+                <p>{{ event[2] }}-{{ event[3] }}-{{ event[4] }} {{ event[6] }}</p>
+                <p>{{ event[1] }}</p>
+            </div>
+            <div class="button-line">
+                <button class="edit-button" onclick="editevent(event)" style="margin: 0 0 6px;">Edit</button>
+                <button class="delete-button" onclick="deleteEvent(event)" style="margin: 0 0 6px;">Delete</button>
+            </div>
+
+        </div>
+        {% endfor %}
+    </div>
+
+
+    <script>
+        function deleteEvent(event) {
+            let ev = event.target.closest(".event")
+            let eventid = ev.dataset.eventid
+            
+
+            const xhr = new XMLHttpRequest()
+            xhr.open("GET", `${window.location.origin}/deleteEvent/${eventid}`)
+            xhr.onload = () => {
+                if (xhr.status === 200) {
+                    ev.remove() //Remove the element from html
+
+                }
+            }
+            xhr.send()
+        }
+
+        function editevent(event) {
+            let ev = event.target.closest(".event")
+            if (!ev) return
+
+            let eventid = ev.dataset.eventid
+            window.location = `/edit/${eventid}?from=${window.location.pathname}`
+        }
+    </script>
+    {% endblock %}
+</body>
+</html>
