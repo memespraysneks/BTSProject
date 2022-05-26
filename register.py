@@ -35,24 +35,18 @@ def runTheData():
         password = form.password.data
         hashedpassword = sha256_crypt.hash(password)
         print(email, username, hashedpassword)
-        db = get_db()
         cur = db.cursor() 
-        try:
-            cur.execute(f'SELECT COUNT(*) FROM USERS WHERE "{username}" == USERNAME') 
-            numberOfRow = cur.fetchone()
-            numberOfRows = numberOfRow[0]
-        except:
-            pass
-        cur.close()
+        cur.execute(f"SELECT COUNT(*) FROM USERS WHERE USERNAME = '{username}' ") 
+        numberOfRows = cur.fetchone()[0]
         print(numberOfRows)
         if numberOfRows == 0:
-            cursor = db.execute(
+            cur.execute(
             f'INSERT INTO USERS(USERNAME, USERPASSWORD, USEREMAIL) VALUES(%s,%s,%s)', (username, hashedpassword, email)
             )
         else: #Fix this later
             return redirect("/register")
 
-        new_user_id = cursor.lastrowid
+        new_user_id = cur.lastrowid
         session.clear()
         session["user_id"] = new_user_id
 
