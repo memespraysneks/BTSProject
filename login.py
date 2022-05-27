@@ -1,16 +1,8 @@
-from flask import render_template
-from flask import Blueprint
-from flask import request
-from flask import g
-from flask import redirect
-from flask import session
-from flask import url_for
+from flask import render_template, Blueprint, request, redirect, session
 from dbconnection import get_db
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, PasswordField
 from wtforms.validators import DataRequired
-import sqlite3
-import json
 from passlib.hash import sha256_crypt
 
 loginpage = Blueprint('loginpage', __name__)
@@ -38,7 +30,8 @@ def login():
             error = None
             cursor = db.cursor()
             cursor.execute(
-                f"SELECT * FROM USERS WHERE USERNAME = '{username}'"
+                "SELECT * FROM USERS WHERE USERNAME = %s",
+                (username,)
             )
             user = cursor.fetchone()
 

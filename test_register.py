@@ -1,5 +1,4 @@
-import flask
-from dbconnection import get_db, setup_db
+from dbconnection import setup_db
 from flaskr import create_app
 
 def setup_db_test():

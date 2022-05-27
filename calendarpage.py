@@ -1,7 +1,6 @@
-from asyncio import events
 import datetime
 import calendar
-from flask import Flask, redirect, render_template, url_for, Blueprint, session
+from flask import redirect, render_template, Blueprint, session
 from dbconnection import get_db
 
 calendarpage = Blueprint("calendarpage", __name__)
@@ -70,7 +69,7 @@ def show_todo():
 def get_user_events_by_date(user_id):
     events = {}
     cursor = db.cursor()
-    cursor.execute(f"SELECT CAST(EVENTDATE AS DATE), COUNT(*) as COUNT FROM EVENTS WHERE USERID={user_id} GROUP BY CAST(EVENTDATE AS DATE)")
+    cursor.execute("SELECT CAST(EVENTDATE AS DATE), COUNT(*) as COUNT FROM EVENTS WHERE USERID=%s GROUP BY CAST(EVENTDATE AS DATE)", (user_id,))
     for row in cursor.fetchall():
         events[f"{row[0].year}-{row[0].month}-{row[0].day}"] = row[1]
 
@@ -79,7 +78,7 @@ def get_user_events_by_date(user_id):
 def get_user_events(user_id):
     events = []
     cursor = db.cursor()
-    cursor.execute(f"SELECT * FROM EVENTS WHERE USERID={user_id} ORDER BY EVENTDATE")
+    cursor.execute("SELECT * FROM EVENTS WHERE USERID=%s ORDER BY EVENTDATE", (user_id,))
     for row in cursor.fetchall():
         split_date = row[3]
         events.append((row[1], row[2], split_date.year, split_date.month, split_date.day, row[0], row[3].strftime("%I:%M %p")))

@@ -1,4 +1,3 @@
-import flask
 from dbconnection import get_db, setup_db
 from flaskr import create_app
 from passlib.hash import sha256_crypt
@@ -12,7 +11,7 @@ def setup_db_test():
     passwd = sha256_crypt.hash("testpassword123")
 
     cursor.execute(
-        f'INSERT INTO USERS(USERNAME, USERPASSWORD, USEREMAIL) VALUES(%s,%s,%s)', ('testuser', passwd, 'jeff@jeff.test')
+        'INSERT INTO USERS(USERNAME, USERPASSWORD, USEREMAIL) VALUES(%s,%s,%s)', ('testuser', passwd, 'jeff@jeff.test')
         )
 
 
