@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='icon.ico') }}">
+    <title>Home Page</title>
+</head>
+<body>
+    {% extends 'index.html' %}
+    {% block content %}
+        
+    <div class="site-wrapper">
+
+        <div class="site-wrapper-inner">
+  
+          <div class="container">
+
+  
+            <div class="inner cover">
+              <h1 class="cover-heading home-title" style="font-family: 'Fjalla One', sans-serif;">Simply Calandar</h1>
+              <p class="lead">Helps users record events and activities, keep track of upcoming meeting and deadlines, and set reminders along with important and personal future events.</p>
+            </br>
+              <div class="button-line" id="button-line" style="float: center;">
+                <a href="login" class="home-login" align="center">Login</a> </br>
+                <a href="register" class="home-register" align="center">Register</a>
+              </div>
+            </div>
+  
+          </div>
+  
+        </div>
+  
+      </div>
+    {% endblock %}
+</body>
+</html>
