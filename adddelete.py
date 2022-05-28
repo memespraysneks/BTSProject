@@ -1,4 +1,4 @@
-from flask import Flask, redirect, render_template, Blueprint, request, session
+from flask import redirect, render_template, Blueprint, request, session
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, TimeField
 from wtforms.validators import DataRequired
@@ -29,7 +29,7 @@ def add(date):
         time = form.time.data
         
         db.cursor().execute(
-           'INSERT INTO EVENTS(EVENTNAME, EVENTDESCRIPTION, EVENTDATE, USERID) VALUES(%s, %s, %s, %s)', (title,description, f"{date} {time}", int(session['user_id']))
+           'INSERT INTO EVENTS(EVENTNAME, EVENTDESCRIPTION, EVENTDATE, USERID) VALUES(%s, %s, %s, %s)', (title,description, f"{date} {time}", session['user_id'])
         )
 
         form.title.data = ''
@@ -46,6 +46,6 @@ def add(date):
 
 @adddelete.route("/deleteEvent/<int:eventid>", methods=["GET"])
 def deletestuff(eventid):
-    db.cursor().execute(f'DELETE FROM EVENTS WHERE EVENTID = {eventid}')
+    db.cursor().execute('DELETE FROM EVENTS WHERE EVENTID = %s AND USERID = %s', (eventid, session["user_id"]))
     return "ok"
 

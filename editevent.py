@@ -21,7 +21,7 @@ def edit(eventid):
     cursor = db.cursor()
 
     if form.validate_on_submit():
-        cursor.execute(f"UPDATE EVENTS SET EVENTNAME = %s, EVENTDESCRIPTION = %s, EVENTDATE = DATE_ADD(CAST(CAST(EVENTDATE AS DATE) AS DATETIME), INTERVAL %s HOUR_SECOND)  WHERE USERID={session['user_id']} AND EVENTID={eventid}", (form.title.data, form.description.data, form.time.data))
+        cursor.execute("UPDATE EVENTS SET EVENTNAME = %s, EVENTDESCRIPTION = %s, EVENTDATE = DATE_ADD(CAST(CAST(EVENTDATE AS DATE) AS DATETIME), INTERVAL %s HOUR_SECOND)  WHERE USERID=%s AND EVENTID=%s", (form.title.data, form.description.data, form.time.data, session["user_id"], eventid))
 
         redirect_loc = request.args.get("from")
         if redirect_loc is not None:
@@ -29,11 +29,10 @@ def edit(eventid):
 
     else:
 
-        cursor.execute(f"SELECT EVENTNAME, EVENTDESCRIPTION, EVENTDATE FROM EVENTS WHERE USERID={session['user_id']} AND EVENTID={eventid}")
+        cursor.execute("SELECT EVENTNAME, EVENTDESCRIPTION, EVENTDATE FROM EVENTS WHERE USERID=%s AND EVENTID=%s", (session['user_id'], eventid))
         eventdetails = cursor.fetchone()
         form.title.data = eventdetails[0]
         form.description.data = eventdetails[1]
-        print(eventdetails[2])
         form.time.data = eventdetails[2]
 
     return render_template("edit.html",

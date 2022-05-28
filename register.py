@@ -1,17 +1,8 @@
-from urllib.parse import uses_params
-from flask import render_template
-from flask import Blueprint
-from flask import request
-from flask import g
-from flask import redirect
-from flask import session
-from flask import url_for
+from flask import render_template, Blueprint, redirect, session
 from dbconnection import get_db
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, EmailField, PasswordField
 from wtforms.validators import DataRequired, EqualTo
-import sqlite3
-import json
 from passlib.hash import sha256_crypt
 
 class RegisterForm(FlaskForm):
@@ -24,7 +15,6 @@ class RegisterForm(FlaskForm):
 registerpage = Blueprint('registerpage', __name__)
 db = get_db()
 
-#TODO : SQL ERROR HANDLING
 @registerpage.route("/register", methods=('GET', 'POST'))
 def runTheData():
     form = RegisterForm()
@@ -34,16 +24,16 @@ def runTheData():
         username = form.username.data
         password = form.password.data
         hashedpassword = sha256_crypt.hash(password)
-        print(email, username, hashedpassword)
+        
         cur = db.cursor() 
-        cur.execute(f"SELECT COUNT(*) FROM USERS WHERE USERNAME = '{username}' ") 
+        cur.execute(f"SELECT COUNT(*) FROM USERS WHERE USERNAME = %s ", (username,)) 
         numberOfRows = cur.fetchone()[0]
-        print(numberOfRows)
+
         if numberOfRows == 0:
             cur.execute(
-            f'INSERT INTO USERS(USERNAME, USERPASSWORD, USEREMAIL) VALUES(%s,%s,%s)', (username, hashedpassword, email)
+            'INSERT INTO USERS(USERNAME, USERPASSWORD, USEREMAIL) VALUES(%s,%s,%s)', (username, hashedpassword, email)
             )
-        else: #Fix this later
+        else:
             return redirect("/register")
 
         new_user_id = cur.lastrowid

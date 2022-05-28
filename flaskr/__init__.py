@@ -1,4 +1,4 @@
-from flask import Flask, redirect, render_template, url_for
+from flask import Flask, render_template
 from dbconnection import setup_db
 
 import os
@@ -18,12 +18,10 @@ def create_app(test=False):
     from editevent import editevent
     from calendarpage import calendarpage
     from adddelete import adddelete
-    from database import databaseAPI
     from login import loginpage
 
     app.register_blueprint(calendarpage)
     app.register_blueprint(adddelete)
-    app.register_blueprint(databaseAPI)
     app.register_blueprint(loginpage)
     app.register_blueprint(registerpage)
     app.register_blueprint(editevent)

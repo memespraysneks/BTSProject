@@ -1,4 +1,3 @@
-import flask
 from dbconnection import get_db, setup_db
 from flaskr import create_app
 
@@ -9,11 +8,11 @@ def setup_db_test():
     cursor = db.cursor()
 
     cursor.execute(
-        f'INSERT INTO USERS(USERNAME, USERPASSWORD, USEREMAIL) VALUES(%s,%s,%s)', ('testuser', 'N/A', 'jeff@jeff.test')
+        'INSERT INTO USERS(USERNAME, USERPASSWORD, USEREMAIL) VALUES(%s,%s,%s)', ('testuser', 'N/A', 'jeff@jeff.test')
         )
 
     cursor.execute(
-        f'INSERT INTO EVENTS(EVENTNAME, EVENTDESCRIPTION, EVENTDATE, USERID) VALUES(%s,%s,%s,%s)', ('test','Desc', '2022-01-01', 1)
+        'INSERT INTO EVENTS(EVENTNAME, EVENTDESCRIPTION, EVENTDATE, USERID) VALUES(%s,%s,%s,%s)', ('test','Desc', '2022-01-01', 1)
     )
 
 
